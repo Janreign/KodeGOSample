@@ -11,9 +11,20 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+
+    //added for firebase
+//    dependencies {
+//
+//        classpath 'com.google.gms:google-services:4.3.15'
+//
+//    }
 }
 rootProject.name = "KodeGO Sample"
 include ':app'
 include ':module_2'
 include ':app:android_life_cycle'
 include ':fragments'
+include ':saving_images'
+include ':friendlychat_android'
+include ':firebase_chat'
+include ':Pokedex2021'

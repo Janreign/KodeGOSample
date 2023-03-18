@@ -2,6 +2,8 @@ package ph.kodego.aragon.janreign.module_2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,26 +27,55 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        dao = StudentDAOSQLImpl(applicationContext)
-        students = dao.getStudents()
+            dao = StudentDAOSQLImpl(applicationContext) // OUTPUT when you run the app, the last line will be shown
+            students = dao.getStudents()
+            students = dao.getStudentsByLastNameAndFirstName("Marco","Valmores") //last line will be shown
+
+//            var studentContacts = dao.getStudentsWithContacts()
 //        init()
 
-        studentAdapter = StudentAdapter(students)
+        studentAdapter = StudentAdapter(students, this)
         binding.list.layoutManager = LinearLayoutManager(applicationContext)
 //        binding.list.layoutManager = GridLayoutManager(applicationContext, 2)
         binding.list.adapter = studentAdapter
 
         binding.addStudentButton.setOnClickListener{
-            studentAdapter.addStudent(Student(
-                    binding.studentFirstname.text.toString(),
-                    binding.studentLastname.text.toString(),
-                    R.drawable.placeholder))
+            var student = Student()
+
+            student.firstName = binding.studentFirstname.text.toString()
+            student.lastName = binding.studentLastname.text.toString()
+
+            dao.addStudent(student)
+            students = dao.getStudents()
+            studentAdapter.updateStudents(students)
+
+//            binding.addStudentButton.setOnClickListener{
+//            studentAdapter.addStudent(Student(
+//                    binding.studentFirstname.text.toString(),
+//                    binding.studentLastname.text.toString(),
+//                    R.drawable.placeholder))
         }
 
         var swipeCallback = SwipeCallback (0,ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
         swipeCallback.studentAdapter = studentAdapter
         itemTouchHelper = ItemTouchHelper(swipeCallback)
         itemTouchHelper.attachToRecyclerView(binding.list)
+
+        //Search
+        binding.searchStudentRecords.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextChange(newText: String?): Boolean {
+//                studentAdapter.filter.filter(newText)  // comment out Jan 26,2023
+                students = dao.searchStudentByLastName(newText!!) // added Jan 26,2023
+                studentAdapter.updateStudents(students)// added Jan 26,2023
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+
+            studentAdapter.filter.filter(query)
+             return false
+           }
+        })
     }
 
     fun init (){

@@ -7,14 +7,17 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
 import ph.kodego.aragon.janreign.module_2.databinding.ActivityLoginBinding
+import ph.kodego.aragon.janreign.module_2.utility.PreferenceUtility
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var username: String
     private lateinit var password: String
+    private lateinit var preferenceUtility: PreferenceUtility // added Jan 26, 2023
 
-    @SuppressLint("SuspiciousIndentation")
+
+
     private val launchRegister = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -32,20 +35,20 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        preferenceUtility = PreferenceUtility(applicationContext) // added Jan 26, 2023
+
+        binding.usernametext.setText(preferenceUtility.getStringPreferences("username")) // added Jan 26, 2023
+        binding.passwordtext.setText(preferenceUtility.getStringPreferences("password")) // added Jan 26, 2023
 
         binding.btnSubmit.setOnClickListener{
 
             username = binding.usernametext.text.toString()
             password = binding.passwordtext.text.toString()
 
-//            Snackbar.make(binding.root, "$username - $password", Snackbar.LENGTH_SHORT).show()
-
-//            Snackbar.make(binding.root, "SUBMIT",Snackbar.LENGTH_SHORT).show()
-//            Toast.makeText(applicationContext, "Submit", Toast.LENGTH_SHORT).show()
-
+            preferenceUtility.saveStringPreferences("username", binding.usernametext.text.toString())
+            preferenceUtility.saveStringPreferences("passowrd", binding.usernametext.text.toString())
 
             var goToHome = Intent(this, MainActivity::class.java)
-
 
             var bundle = Bundle()
             bundle.putString("username", username)
@@ -63,6 +66,8 @@ class LoginActivity : AppCompatActivity() {
             var goToRegister = Intent(this, RegisterActivity::class.java)
             launchRegister.launch(goToRegister)
         }
+
+
     }
 
     override fun onBackPressed() {

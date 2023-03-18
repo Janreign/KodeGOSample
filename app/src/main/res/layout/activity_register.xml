@@ -29,7 +29,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-
             android:padding="5dp">
 
             <com.google.android.material.textfield.TextInputEditText

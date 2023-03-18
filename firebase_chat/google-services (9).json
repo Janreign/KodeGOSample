@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "784345751982",
+    "project_id": "kodego-firebase-8b50d",
+    "storage_bucket": "kodego-firebase-8b50d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784345751982:android:f8c897f40c2ed402f0283f",
+        "android_client_info": {
+          "package_name": "ph.kodego.aragon.janreign.firebase_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784345751982-0rsucls70cshi7s6hul0qdejapafp67u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoBS-rYwCuAGr1xXyS1Tho7OI0FTDmpFc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784345751982-0rsucls70cshi7s6hul0qdejapafp67u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
